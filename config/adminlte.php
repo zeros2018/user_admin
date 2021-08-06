@@ -253,55 +253,134 @@ return [
 //            'label'       => 4,
 //            'label_color' => 'success',
 //        ],
-        ['header' => 'account_settings'],
+
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
+            'text'    => 'Administración',
+            'icon'    => 'fas fa-fw fa-child',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
+                    'text' => 'Lugares',
+                    'icon'    => 'fas fa-fw fa-map-marker-alt',
                     'submenu' => [
                         [
-                            'text' => 'level_two',
-                            'url'  => '#',
+                            'text' => 'Zonas',
+                            'icon'    => 'fas fa-fw fa-map',
+                            'url' => '#'
                         ],
                         [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
+                            'text' => 'Barrios',
+                            'icon'    => 'fas fa-fw fa-flag',
+                            'url' => '#'
                         ],
+                        [
+                            'text' => 'Calles y Avenidas',
+                            'icon'    => 'fas fa-fw fa-directions',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Aréas Verdes',
+                            'icon'    => 'fas fa-fw fa-tree',
+                            'url' => '#'
+                        ],
+                        [
+                            'text' => 'Activos Fijos',
+                            'icon'    => 'fas fa-fw fa-building',
+                            'url' => '#'
+                        ],
+
                     ],
                 ],
                 [
-                    'text' => 'level_one',
+                    'text'    => 'Autoridades',
+                    'icon'    => 'fas fa-fw fa-address-card',
+                    'submenu' => [
+                        [
+                            'text' => 'Presidentes',
+                            'icon'    => 'fas fa-fw fa-user-friends',
+                            'url'  => '#',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+
+        [
+            'text'    => 'Gestión de Solicitudes',
+            'icon'    => 'fas fa-fw fa-folder-open',
+            'submenu' => [
+                [
+                    'text' => 'Solicitudes',
+                    'icon'    => 'fas fa-fw fa-copy',
                     'url'  => '#',
                 ],
             ],
         ],
+
+        [
+            'text'    => 'Reportes',
+            'icon'    => 'fas fa-fw fa-paste',
+            'submenu' => [
+                [
+                    'text' => 'Lugares',
+                    'icon'    => 'fas fa-fw fa-map-marker-alt',
+                    'url'  => '#',
+                ],
+                [
+                    'text'    => 'Autoridades',
+                    'icon'    => 'fas fa-fw fa-address-card',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Solicitudes',
+                    'icon'    => 'fas fa-fw fa-copy',
+                    'url'  => '#',
+                ],
+            ],
+        ],
+
+        [
+            'text' => 'Seguridad',
+            'url'  => '#',
+            'icon' => 'fas fa-fw fa-shield-alt',
+            'submenu' => [
+                [
+                    'text' => 'Usuarios',
+                    'url'  => 'admin/settings',
+                    'icon' => 'fas fa-fw fa-user',
+                ],
+                [
+                    'text' => 'Roles',
+                    'url'  => '#',
+                    'icon' => 'fas fa-fw fa-users-cog',
+                ],
+                [
+                    'text' => 'Permisos',
+                    'url'  => '#',
+                    'icon' => 'fas fa-fw fa-key',
+                ],
+            ],
+        ],
+
+        [
+            'text' => 'Mi Perfil',
+            'url'  => 'admin/settings',
+            'icon' => 'fas fa-fw fa-user-circle',
+            'submenu' => [
+                [
+                    'text' => 'profile',
+                    'url'  => 'admin/settings',
+                    'icon' => 'fas fa-fw fa-user',
+                ],
+                [
+                    'text' => 'change_password',
+                    'url'  => 'admin/settings',
+                    'icon' => 'fas fa-fw fa-lock',
+                ],
+            ],
+        ],
+
+
+
 //        ['header' => 'labels'],
 //        [
 //            'text'       => 'important',
