@@ -20,10 +20,11 @@ We are using follow technologies
 
 Also we added the next dependencies for laravel 
  
-- [Simple, fast authentification from laravel](https://laravel.com/docs/routing).
 - We use the [AdminLTE 3](https://github.com/jeroennoten/Laravel-AdminLTE) for the template the site web  
-
-
+- [Simple, fast authentification from laravel](https://laravel.com/docs/routing).
+- [We use Spatie for roles and permissions](https://spatie.be/docs/laravel-permission/v4/introduction).
+- We use [livewire](https://laravel-livewire.com/) for making view more interactives
+- We also use [livewire-crud](https://github.com/flightsadmin/livewire-crud) for created  CRUDs faster. 
 
 ## Deployment
 
