@@ -85,7 +85,7 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
+    'layout_fixed_sidebar' => true,
     'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
@@ -345,18 +345,24 @@ return [
             'submenu' => [
                 [
                     'text' => 'Usuarios',
-                    'url'  => 'admin/settings',
+                    'route' => 'admin.users.index',
                     'icon' => 'fas fa-fw fa-user',
+                    'active' => ['admin/users*'],
+                    'can' => 'admin.users.index',
                 ],
                 [
                     'text' => 'Roles',
-                    'url'  => '#',
+                    'route' => 'admin.roles.index',
                     'icon' => 'fas fa-fw fa-users-cog',
+                    'active' => ['admin/roles*'],
+                    'can' => 'admin.roles.index',
                 ],
                 [
                     'text' => 'Permisos',
-                    'url'  => '#',
+                    'route' => 'admin.permissions.index',
                     'icon' => 'fas fa-fw fa-key',
+                    'active' => ['admin/permissions*'],
+                    'can' => 'admin.permissions.index',
                 ],
             ],
         ],
@@ -517,5 +523,5 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Other-Configuration
     */
 
-    'livewire' => false,
+    'livewire' => true,
 ];

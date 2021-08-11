@@ -18,12 +18,20 @@ We are using follow technologies
 - [Bootstrap 4.6.0](https://laravel.com/docs/container).
 
 
+Other way we are using the next plugings for html views
+
+- For select inputs multiples we used [Select2](https://select2.org/getting-started/installation)  
+- When we assignment permission to a Role need us [bootstrap-duallistbox-3.0.9](https://libraries.io/npm/bootstrap-duallistbox)
+
+
 Also we added the next dependencies for laravel 
  
-- [Simple, fast authentification from laravel](https://laravel.com/docs/routing).
 - We use the [AdminLTE 3](https://github.com/jeroennoten/Laravel-AdminLTE) for the template the site web  
-
-
+- [Simple, fast authentification from laravel](https://laravel.com/docs/routing).
+- [We use Spatie for roles and permissions](https://spatie.be/docs/laravel-permission/v4/introduction).
+- We use [livewire](https://laravel-livewire.com/) for making view more interactives
+- We also use [livewire-crud](https://github.com/flightsadmin/livewire-crud) for created  CRUDs faster.
+- For my pages we user [Laravel Collective](https://laravelcollective.com/docs/6.x/html) cause is utilful for creating views faster. 
 
 ## Deployment
 
