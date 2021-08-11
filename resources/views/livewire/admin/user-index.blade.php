@@ -11,7 +11,7 @@
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Correo</th>
-                    <th colspan="2">Acción</th>
+                    <th class="text-center">Acción</th>
                 </tr>
             </thead>
 
@@ -21,12 +21,22 @@
                         <td>{{ $user->id }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        <td width="10px"> <a class="btn btn-primary btn-sm" href="{{route('admin.users.edit', $user)}}"> Editar</a> </td>
-                        <form action="{{route('admin.users.destroy', $user)}}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <td width="10px"> <button type="submit" class="btn btn-danger btn-sm"> Eliminar</button> </td>
-                        </form>
+                        <td width="200px">
+                        @can('admin.users.edit')
+                            <a class="btn btn-info btn-sm d-inline" href="{{route('admin.users.show', $user)}}"> Ver</a>
+                        @endcan
+                        @can('admin.users.edit')
+                            <a class="btn btn-secondary btn-sm d-inline" href="{{route('admin.users.edit', $user)}}"> Editar</a>
+                            @endcan
+                        @can('admin.users.destroy')
+                            <form action="{{route('admin.users.destroy', $user)}}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm"> Eliminar</button>
+                            </form>
+                        @endcan
+                        </td>
+
 
                     </tr>
                 @endforeach

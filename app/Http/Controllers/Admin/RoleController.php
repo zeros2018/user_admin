@@ -3,83 +3,99 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\PermissionName;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct()
+    {
+        $this->middleware('can:admin.roles.index')->only('index');
+        $this->middleware('can:admin.roles.create')->only('create', 'store');
+        $this->middleware('can:admin.roles.edit')->only('edit', 'update');
+        $this->middleware('can:admin.roles.destroy')->only('destroy');
+    }
+
     public function index()
     {
-        //
+        return view('admin.role.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $permisions_table = Permission::all();
+        $permisions_name = PermissionName::all()->pluck('name', 'permission_id');
+
+        $permissions = [];
+        foreach ($permisions_table as $permision){
+            if ($permisions_name->has($permision->id))
+                $permissions[$permision->id] = $permisions_name[$permision->id];
+        }
+
+        return view('admin.role.create', compact('permissions'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:3|max:100|unique:roles',
+        ]);
+
+        $role = Role::create(['name'=> $request->get('name')]);
+        $permissions = $request->get('permissions');
+        $role->syncPermissions($permissions);
+
+        return redirect()->route('admin.roles.edit', $role)
+            ->with('info', "Rol $role->name creado con exito");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(Role $role)
     {
-        //
+        $permisions_table = Permission::all();
+        $permisions_name = PermissionName::all()->pluck('name', 'permission_id');
+
+        $permissions = [];
+        foreach ($permisions_table as $permision){
+            if ($permisions_name->has($permision->id))
+                $permissions[$permision->id] = $permisions_name[$permision->id];
+        }
+        return view('admin.role.show', compact('role', 'permissions'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        //
+        $permisions_table = Permission::all();
+        $permisions_name = PermissionName::all()->pluck('name', 'permission_id');
+
+        $permissions = [];
+        foreach ($permisions_table as $permision){
+            if ($permisions_name->has($permision->id))
+                $permissions[$permision->id] = $permisions_name[$permision->id];
+        }
+
+        return view('admin.role.edit', compact('role', 'permissions'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        //
+        $request->validate([
+            'name' => "required|min:3|max:100|unique:roles,id,$role->id",
+        ]);
+
+        $role->update(['name' => $request->get('name')]);
+
+        $permissions = $request->get('permissions');
+        $role->syncPermissions($permissions);
+
+        return redirect()->route('admin.roles.edit', $role)->with('info', "Rol $role->name actualizado con exito");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        //
+        $role->delete();
+        return redirect()->route('admin.roles.index')->with('info', "Rol $role->name Eliminado con exito");
     }
 }

@@ -3,10 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:admin.users.index')->only('index');
+        $this->middleware('can:admin.users.create')->only('create', 'store');
+        $this->middleware('can:admin.users.edit')->only('edit', 'update');
+        $this->middleware('can:admin.users.destroy')->only('destroy');
+    }
+
     public function index(){
         return view('admin.user.index');
     }
@@ -18,7 +29,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.user.create');
+        $roles = Role::all()->pluck('name','id');
+        return view('admin.user.create', compact('roles'));
     }
 
     /**
@@ -29,29 +41,31 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect('admin.user.index');
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|unique:users|max:100',
+            'password' => 'required|min:4',
+            'roles' => 'required',
+            ]
+        );
+
+        $user = User::create($request->all());
+
+        $user->assignRole($request->get('roles'));
+
+        return redirect()->route('admin.users.index')->with('info', "Usuario $user->name creado con Exito");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($user)
+    public function show(User $user)
     {
-        return view('admin.user.show');
+        $roles = Role::all()->pluck('name','id');
+        return view('admin.user.show', compact('user', 'roles'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($user)
+    public function edit(User $user)
     {
-        return view('admin.user.edit');
+        $roles = Role::all()->pluck('name','id');
+        return view('admin.user.edit', compact('user', 'roles'));
     }
 
     /**
@@ -61,9 +75,21 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $user)
+    public function update(Request $request, User $user)
     {
-        return redirect('admin.user.index');
+        $request->validate([
+                'name' => 'required|max:255',
+                'email' => "required|unique:users,id,$user->id|max:100",
+                'password' => 'required|min:4',
+                'roles' => 'required',
+            ]
+        );
+
+        $user->update($request->all());
+
+        $user->syncRoles($request->get('roles'));
+
+        return redirect()->route('admin.users.index')->with('info', "Usuario $user->name actaulizado con exito");
     }
 
     /**
@@ -75,6 +101,10 @@ class UserController extends Controller
     public function destroy($user)
     {
         return redirect('admin/users');
+    }
+
+    public function AuthRouteAPI(Request $request){
+        return $request->user();
     }
 
 }
